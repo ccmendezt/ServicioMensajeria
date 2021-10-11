@@ -15,13 +15,13 @@
         <form action="Login" method="POST">
             <label>Iniciar sesion como:</label>
             <select name="tipoUsuario">
-                <option value="1">Cliente</option> 
-                <option value="2" selected>Mensajero</option> 
+                <option value="cli">Cliente</option> 
+                <option value="men">Mensajero</option> 
             </select><br>
             <label>Usuario</label>
             <input type="text" name="user" placeholder="ejemplo@gmail.com" /><br>
             <label>Contraseña</label>
-            <input type="password" name="password" placeholder="contraseña" /><br>
+            <input type="password" name="pass" placeholder="contraseña" /><br>
             <input type="submit" value="Enviar" />
          </form>
     </body>

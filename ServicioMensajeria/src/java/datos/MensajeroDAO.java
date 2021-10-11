@@ -24,7 +24,7 @@ public class MensajeroDAO {
 
     }
 
-    public Mensajero iniciarSesion(String email, long password) throws NullPointerException {
+    public Mensajero iniciarSesion(String email, long password) throws CaException {
         Mensajero m = null;
         Connection conexion = null;
         PreparedStatement prepStmt = null;
@@ -37,32 +37,17 @@ public class MensajeroDAO {
             prepStmt.setString(1, email);
             prepStmt.setLong(2, password);
 
-            prepStmt.executeQuery();
+            rs = prepStmt.executeQuery();
 
             while (rs.next()) {
                 m = new Mensajero();
                 m.setEmail(rs.getString("o_email"));
                 m.setNroDoc(rs.getLong("k_nroDoc"));
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
+            throw new CaException("MensajeroDAO", "No pudo recuperar los hechizos" + e.getMessage());
         } finally {
             ServiceLocator.getInstance().liberarConexion();
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-
-                if (prepStmt != null) {
-                    prepStmt.close();
-                }
-
-                if (conexion != null) {
-                    conexion.close();
-                }
-            } catch (Exception e2) {
-                e2.printStackTrace();
-            }
         }
 
         return m;

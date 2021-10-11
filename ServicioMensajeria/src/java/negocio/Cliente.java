@@ -14,6 +14,8 @@ public class Cliente {
     private long nroDoc, nroCelular;
     private String nombres, apellidos, email;
 
+    public Cliente(){}
+    
     public Cliente(String tipoDoc, long nroDoc, long nroCelular, String nombres, String apellidos, String email) {
         this.tipoDoc = tipoDoc;
         this.nroDoc = nroDoc;
