@@ -16,11 +16,13 @@
         <form action="Login" method="POST">
             <label>Fecha del servicio:</label>
             <input type="date" id="fInicio" name="fInicio" min=""><br>
+            <label>Hora del servicio:</label>
+            <input type="time" id="fHoraInicio" name="fHoraInicio" min="" onchange="validarHora()"><br>
             <label>Iniciar sesion como:</label>
-            <select name="tipoUsuario">
-                <option value="cli">Cliente</option> 
-                <option value="men">Mensajero</option> 
-            </select><br>
+            <!--<select name="tipoUsuario">
+                <option value="cli">Cliente</option>
+                <option value="men">Mensajero</option>
+            </select><br>-->
             <label>Usuario</label>
             <input type="text" name="user" placeholder="ejemplo@gmail.com" /><br>
             <label>Contraseña</label>
