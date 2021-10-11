@@ -1,6 +1,6 @@
 <%-- 
-    Document   : login
-    Created on : 10/10/2021, 11:52:46 PM
+    Document   : ProgramarServicio
+    Created on : 11/10/2021, 11:30:02 AM
     Author     : CRISTIAN CAMILO
 --%>
 
@@ -9,10 +9,13 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Iniciar sesion</title>
+        <script src="js/programarServicio.js"></script>
+        <title>Programar Servicio</title>
     </head>
-    <body>
+    <body onload="validarFecha()">
         <form action="Login" method="POST">
+            <label>Fecha del servicio:</label>
+            <input type="date" id="fInicio" name="fInicio" min=""><br>
             <label>Iniciar sesion como:</label>
             <select name="tipoUsuario">
                 <option value="cli">Cliente</option> 

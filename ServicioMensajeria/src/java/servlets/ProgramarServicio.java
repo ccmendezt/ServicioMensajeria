@@ -4,27 +4,20 @@
  */
 package servlets;
 
-import datos.ClienteDAO;
-import datos.MensajeroDAO;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import negocio.Cliente;
-import negocio.Mensajero;
-import util.CaException;
 
 /**
  *
  * @author CRISTIAN CAMILO
  */
-@WebServlet(name = "Login", urlPatterns = {"/Login"})
-public class Login extends HttpServlet {
+@WebServlet(name = "ProgramarServicio", urlPatterns = {"/ProgramarServicio"})
+public class ProgramarServicio extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,42 +29,20 @@ public class Login extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, CaException {
-
-        String user, tipoUsuario;
-        long pass;
-        tipoUsuario = request.getParameter("tipoUsuario");
-        user = request.getParameter("user");
-        pass = Long.parseLong(request.getParameter("pass"));
-
-        if (tipoUsuario.equals("cli")) {
-            ClienteDAO clienteDAO = new ClienteDAO();
-            Cliente c;
-            c = clienteDAO.iniciarSesion(user, pass);
-
-            if (c == null) {
-                request.setAttribute("mensaje", "Error nombre de usuario y/o clave");
-                request.getRequestDispatcher("InicioSesionIncorrecto.html").forward(request, response);
-            } else {
-                response.sendRedirect("InicioSesionCliente.jsp");
-            }
-        } else {
-            if (tipoUsuario.equals("men")) {
-
-                MensajeroDAO mensajeroDAO = new MensajeroDAO();
-                Mensajero m;
-                m = mensajeroDAO.iniciarSesion(user, pass);
-
-                if (m == null) {
-                    request.setAttribute("mensaje", "Error nombre de usuario y/o clave");
-                    request.getRequestDispatcher("InicioSesionIncorrecto.html").forward(request, response);
-                } else {
-                    response.sendRedirect("InicioSesionMensajero.jsp");
-                }
-
-            }
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet ProgramarServicio</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet ProgramarServicio at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -86,11 +57,7 @@ public class Login extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (CaException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -104,11 +71,7 @@ public class Login extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (CaException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
