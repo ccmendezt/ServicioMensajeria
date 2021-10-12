@@ -40,9 +40,19 @@ function validarHora() {
     var fechaForm = document.getElementById("fInicio");
     alert("FEcha inicio " + fechaForm.value);
     
+    var horaForm = document.getElementById("fHoraInicio");
+    alert("FEcha inicio " + horaForm.value);
+    // get por ID el campo de hora y mostrarlo a ver qué pedo
+    
     if(fechaForm.value == fechaCompleta){
         alert("Las fechas son iguales");
     }else{
         alert("Las fechas NO son iguales");
     }
+}
+
+function generarDir(){
+    var nroDirecciones = document.getElementById("nroDir").value();
+    //Generar las direcciones con un innerHTML
+    // Y se podría hacer un metodo en el DAO de agregar una direccion, y llamalo la cantidad de veces que indique el nroDirecciones
 }
