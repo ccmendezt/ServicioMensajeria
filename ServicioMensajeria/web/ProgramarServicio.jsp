@@ -17,8 +17,8 @@
         <form action="ProgramarServicio" method="POST">
             <label>Ciudad de servicio:</label>
             <select name="ciudad" required>
-                <option value="bog">Bogota</option>
-                <option value="tun">Tunja</option>
+                <option value="11001">Bogota</option>
+                <option value="15001">Tunja</option>
             </select><br>
             <label>Dia:</label>
             <input type="date" id="fInicio" name="fInicio" min="" required><br>
@@ -26,13 +26,13 @@
             <input type="time" id="fHoraInicio" name="fHoraInicio" min="" onchange="_validarHora()" required><br>
             <label>Tipo de servicio:</label>
             <select name="tipoServicio" required>
-                <option value="ida">Ida</option>
-                <option value="vuelta">Ida y vuelta</option>
+                <option value="I">Ida</option>
+                <option value="V">Ida y vuelta</option>
             </select><br>
             <label>Medio de pago:</label>
             <select name="medioPago" required>
-                <option value="efectivo">Efectivo</option>
-                <option value="pse">PSE</option>
+                <option value="E">Efectivo</option>
+                <option value="P">PSE</option>
             </select><br>
             <label>Volumen de paquete:</label>
             <select name="volumenPaquete" required>

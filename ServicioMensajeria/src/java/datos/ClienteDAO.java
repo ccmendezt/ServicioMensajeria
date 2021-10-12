@@ -27,7 +27,7 @@ public class ClienteDAO {
         PreparedStatement prepStmt = null;
         ResultSet rs = null;
         try {
-            String strSQL = "SELECT o_email, k_nroDoc FROM cliente WHERE o_email = ? AND k_nroDoc = ?";
+            String strSQL = "SELECT k_tipoDoc, o_email, k_nroDoc FROM cliente WHERE o_email = ? AND k_nroDoc = ?";
             conexion = ServiceLocator.getInstance().tomarConexion();
             prepStmt = conexion.prepareStatement(strSQL);
 
@@ -39,6 +39,7 @@ public class ClienteDAO {
             while (rs.next()) {
                 c = new Cliente();
                 c.setEmail(rs.getString("o_email"));
+                c.setTipoDoc(rs.getString("k_tipoDoc"));
                 c.setNroDoc(rs.getLong("k_nroDoc"));
             }
         } catch (SQLException e) {

@@ -54,6 +54,10 @@ public class Login extends HttpServlet {
                 request.getRequestDispatcher("InicioSesionIncorrecto.html").forward(request, response);
             } else {
                 response.sendRedirect("InicioSesionCliente.jsp");
+                HttpSession sesion = request.getSession();
+                sesion.setAttribute("tipoDocCli", c.getTipoDoc());
+                sesion.setAttribute("userCli", c.getEmail());
+                sesion.setAttribute("passCli", c.getNroDoc());
             }
         } else {
             if (tipoUsuario.equals("men")) {

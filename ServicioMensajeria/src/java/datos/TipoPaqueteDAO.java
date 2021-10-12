@@ -4,51 +4,44 @@
  */
 package datos;
 
+
 import util.CaException;
 import util.ServiceLocator;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import negocio.Mensajero;
-
+import negocio.TipoPaquete;
 /**
  *
  * @author CRISTIAN CAMILO
  */
-public class MensajeroDAO {
-
-    public MensajeroDAO() {
-
-    }
-
-    public Mensajero iniciarSesion(String email, long password) throws CaException {
-        Mensajero m = null;
+public class TipoPaqueteDAO {
+    public TipoPaquete getTipoP(int idTipoP) throws CaException {
+        TipoPaquete tp = null;
         Connection conexion = null;
         PreparedStatement prepStmt = null;
         ResultSet rs = null;
         try {
-            String strSQL = "SELECT o_email, k_nroDoc FROM mensajero WHERE o_email = ? AND k_nroDoc = ?";
+            String strSQL = "SELECT * FROM tipo_paquete WHERE k_idTipoP = ?";
             conexion = ServiceLocator.getInstance().tomarConexion();
             prepStmt = conexion.prepareStatement(strSQL);
 
-            prepStmt.setString(1, email);
-            prepStmt.setLong(2, password);
+            prepStmt.setInt(1, idTipoP);
 
             rs = prepStmt.executeQuery();
 
             while (rs.next()) {
-                m = new Mensajero();
-                m.setEmail(rs.getString("o_email"));
-                m.setNroDoc(rs.getLong("k_nroDoc"));
+                tp = new TipoPaquete();
+                tp.setIdTipoPaquete(rs.getInt("k_idTipoP"));
+                tp.setNombreTipoP(rs.getString("n_nombreTipoP"));
+                tp.setTarifaPaquete(rs.getFloat("q_tarifaPaquete"));
             }
         } catch (SQLException e) {
-            throw new CaException("MensajeroDAO", "No pudo recuperar los hechizos" + e.getMessage());
+            throw new CaException("TipoPaqueteDAO", "No pudo recuperar el tipo de Paquete" + e.getMessage());
         } finally {
             ServiceLocator.getInstance().liberarConexion();
         }
-
-        return m;
+        return tp;
     }
-
 }

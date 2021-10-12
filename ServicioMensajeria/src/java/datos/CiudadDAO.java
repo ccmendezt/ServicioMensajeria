@@ -10,45 +10,40 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import negocio.Mensajero;
+import negocio.Ciudad;
 
 /**
  *
  * @author CRISTIAN CAMILO
  */
-public class MensajeroDAO {
+public class CiudadDAO {
 
-    public MensajeroDAO() {
-
-    }
-
-    public Mensajero iniciarSesion(String email, long password) throws CaException {
-        Mensajero m = null;
+    public Ciudad getCiudad(int idCiudad) throws CaException {
+        Ciudad c = null;
         Connection conexion = null;
         PreparedStatement prepStmt = null;
         ResultSet rs = null;
         try {
-            String strSQL = "SELECT o_email, k_nroDoc FROM mensajero WHERE o_email = ? AND k_nroDoc = ?";
+            String strSQL = "SELECT * FROM ciudad WHERE k_idCiudad = ?";
             conexion = ServiceLocator.getInstance().tomarConexion();
             prepStmt = conexion.prepareStatement(strSQL);
 
-            prepStmt.setString(1, email);
-            prepStmt.setLong(2, password);
+            prepStmt.setInt(1, idCiudad);
 
             rs = prepStmt.executeQuery();
 
             while (rs.next()) {
-                m = new Mensajero();
-                m.setEmail(rs.getString("o_email"));
-                m.setNroDoc(rs.getLong("k_nroDoc"));
+                c = new Ciudad();
+                c.setIdCiudad(rs.getInt("k_idCiudad"));
+                c.setNombreCiudad(rs.getString("n_nombreciudad"));
+                c.setPrecioTrayecto(rs.getInt("q_precioTrayecto"));
+                c.setPorcentajeComision(rs.getFloat("t_porcentajeComision"));
             }
         } catch (SQLException e) {
-            throw new CaException("MensajeroDAO", "No pudo recuperar los hechizos" + e.getMessage());
+            throw new CaException("CiudadDAO", "No pudo recuperar la ciudad" + e.getMessage());
         } finally {
             ServiceLocator.getInstance().liberarConexion();
         }
-
-        return m;
+        return c;
     }
-
 }
