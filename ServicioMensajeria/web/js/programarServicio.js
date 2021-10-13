@@ -144,3 +144,85 @@ tipoServicio.addEventListener("change", event => {
             break;
     }
 })
+
+
+// Dias
+
+var fechaComparar = new Date(); 
+var fechas = document.getElementById("fInicio");
+var igual = false;
+var mayor = false;
+
+fechas.addEventListener("change", event => {
+    var datosFechas = fechas.valueAsDate;
+    var datosDia = datosFechas.getDate();
+    datosDia += 1;
+    console.log(datosDia);
+    var datosMes = datosFechas.getMonth();
+    datosMes += 1;
+    console.log(datosMes);
+    var datosAnno = datosFechas.getFullYear();
+    console.log(datosAnno);
+
+    if(datosDia == fechaComparar.getDate() && datosMes == fechaComparar.getMonth()+1 && datosAnno == fechaComparar.getFullYear()){
+        console.log("Dia igual")
+        igual = true;
+        mayor = false;
+    }else{
+        if(datosDia > fechaComparar.getDate() && datosMes >= fechaComparar.getMonth()+1 && datosAnno >= fechaComparar.getFullYear()){
+            console.log("Fecha mayor")
+            mayor = true;
+            igual = false;
+        }
+    }
+})
+
+
+// Horas
+
+var datos = document.getElementById("fHoraInicio");
+var horaActual = fechaComparar.getHours();
+var minutoActual = fechaComparar.getMinutes();
+var AmPm = 0;
+// if(horaActual == 0){
+//     horaActual = 12;
+//     AmPm = 1; 
+// }
+
+datos.addEventListener("change", event => {
+
+    var datosFecha = datos.valueAsDate;
+    var datosReloj = datosFecha.getTime();
+
+    var s = datosReloj;
+    var ms = s % 1000;
+  	s = (s - ms) / 1000;
+  	var secs = s % 60;
+  	s = (s - secs) / 60;
+  	var mins = s % 60;
+  	var hrs = (s - mins) / 60;
+    if(hrs == 0){
+        hrs = 12;
+    }
+
+    strMsg = hrs + ':' + mins;
+    console.log(strMsg)
+    // horaTotalActual = horaActual + ":" + minutoActual;
+    if(igual == true && mayor == false){
+        if(hrs < horaActual){
+            // if(horaActual == 12 && AmPm == 1){
+            //     horaActual = "00";
+            //     AmPm = 0;
+            // }
+            horaTotalActual = horaActual + ":" + minutoActual;
+            document.getElementById("fHoraInicio").value = horaTotalActual;
+            alert("Digite una hora mayor")
+        }
+        if(hrs == horaActual && mins < minutoActual){
+            horaTotalActual = horaActual + ":" + minutoActual;
+            document.getElementById("fHoraInicio").value = horaTotalActual;
+            alert("Digite una hora mayor")
+        }
+    }
+})
+

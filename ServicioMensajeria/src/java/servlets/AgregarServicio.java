@@ -80,6 +80,7 @@ public class AgregarServicio extends HttpServlet {
         java.sql.Timestamp sqlTimestamp = new java.sql.Timestamp(lnMilisegundos);*/
         ServicioDAO servicioDAO = new ServicioDAO();
         Servicio s = new Servicio(idCiudad, tipoDocUser, usuario, volumenPaquete, fInicio, fHoraInicio, i_tipoSer, i_medioPago, costo);
+        sesion.setAttribute("serviciosProgramados", s);
         servicioDAO.programarServicio(s);
 
         DireccionDAO dirDAO = new DireccionDAO();
