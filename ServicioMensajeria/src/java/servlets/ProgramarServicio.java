@@ -122,34 +122,7 @@ public class ProgramarServicio extends HttpServlet {
             com = "comentario";
         }
         
-
         response.sendRedirect("FacturaServicio.jsp");
-
-        /*try (PrintWriter out = response.getWriter()) {
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ProgramarServicio</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ProgramarServicio at " + request.getContextPath() + "</h1>");
-            out.println("<h2>Ciudad Servicio " + ciudadForm + "</h2>");
-            out.println("<h2>Fecha servicio " + diaForm + "</h2>");
-            out.println("<h2>Hora servicio " + horaForm + "</h2>");
-            out.println("<h2>Usuario cliente " + usuario + "</h2>");
-            out.println("<h2>Tipo doc cliente " + tipoDocUser + "</h2>");
-            out.println("<h2>Tipo de servicio " + tipoServForm + "</h2>");
-            out.println("<h2>Tarifa ciudad " + ciudad.getPrecioTrayecto() + "</h2>");
-            out.println("<h2>Tarifa paquete " + tp.getTarifaPaquete() + "</h2>");
-            out.println("<h2>El costo del servicio es " + costo + "</h2>");
-            for(int i=0; i<nroDirForm; i++){
-                out.println("<h2>Direcciones " + direcciones[i] + "</h2>");
-                out.println("<h2>Comentarios " + indicaciones[i] + "</h2>");
-            }
-            
-            out.println("</body>");
-            out.println("</html>");
-        }*/
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

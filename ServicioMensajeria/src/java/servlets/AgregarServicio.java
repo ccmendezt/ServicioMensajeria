@@ -109,10 +109,6 @@ public class AgregarServicio extends HttpServlet {
         out.println("</body>");
         out.println("</html>");
 
-        //sesion.setAttribute("servicioExitoso", "true");
-        //sesion.setAttribute("programarServicio", "El servicio ha sido programado con éxito");
-        //response.sendRedirect("InicioSesionCliente.jsp");
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

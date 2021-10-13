@@ -18,7 +18,6 @@ import util.CaException;
  * @author CRISTIAN CAMILO
  */
 public class ServicioDAO {
-    //private Servicio s;
     
     public void programarServicio(Servicio s) throws CaException {
         Connection conexion = null;

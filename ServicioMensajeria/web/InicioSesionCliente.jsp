@@ -12,9 +12,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-        
         <a href="ProgramarServicio.jsp">Programar servicio</a>
         <a href="index.jsp">Salir</a>
-        
     </body>
 </html>
