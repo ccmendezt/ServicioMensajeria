@@ -76,7 +76,7 @@
             <label>Ciudad del servicio: <%= ciudadServicio%></label><br>
             <label>Fecha del servicio: <%= fInicio%></label><br>
             <label>Hora del servicio: <%= fHoraInicio%></label><br>
-            <label>Tipo de servicio: <%= tipoServicio%></label><br>
+            <label>Tipo de servicio: <%= i_tipoServicio%></label><br>
             <label>Medio de pago: <%= medioPago%></label><br> 
             <label>Tipo de paquete: <%= i_tipoPaquete%></label><br>
             <label>Numero de direcciones: <%= nroDir%></label><br>
