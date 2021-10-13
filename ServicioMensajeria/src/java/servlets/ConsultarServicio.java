@@ -39,18 +39,53 @@ public class ConsultarServicio extends HttpServlet {
             throws ServletException, IOException, CaException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession sesion = request.getSession();
+        PrintWriter out = response.getWriter();
         int opcion = 0, idServicio = 0;
         long nroDocCli = 0;
-        String fechaServicio = "", tipoDocCli = "";
+        String fechaServicio = "";
         ServicioDAO servDAO = new ServicioDAO();
-        ResultSet rs = null;
-        String id = "";
+
         opcion = Integer.parseInt(request.getParameter("tipoConsultaS"));
-        
-            idServicio = Integer.parseInt(request.getParameter("idServicio"));
-            rs = servDAO.buscarServicioById(idServicio);
-            sesion.setAttribute("consultaServicio", rs);
-            //id = rs.getString(1);
+
+        try{
+            ResultSet res;
+            if (opcion == 1) {
+                idServicio = Integer.parseInt(request.getParameter("idServicio"));
+                res = servDAO.getServicioById(idServicio);
+                sesion.setAttribute("servicioFiltro", res);
+                response.sendRedirect("MostrarServicio.jsp");
+            } else {
+                if (opcion == 2) {
+                    fechaServicio = request.getParameter("fechaBusqueda");
+                    res = servDAO.getServicioByDate(fechaServicio);
+                    sesion.setAttribute("servicioFiltro", res);
+                    response.sendRedirect("MostrarServicio.jsp");
+                } else {
+                    if (opcion == 3) {
+                        nroDocCli = Long.parseLong(request.getParameter("documentoId"));
+                        res = servDAO.getServicioByCliente(nroDocCli);
+                        sesion.setAttribute("servicioFiltro", res);
+                        response.sendRedirect("MostrarServicio.jsp");
+                    }
+                }
+
+            }
+   
+        } catch (Exception e) {
+
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet Inicio</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Error at " + e.toString() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+
+        } finally {
+            out.close();
+        }
+        //id = rs.getString(1);
         /*if(opcion == 1){
         }else{
             if(opcion == 2){
@@ -66,14 +101,9 @@ public class ConsultarServicio extends HttpServlet {
                 }
             }
         }*/
+
         
-        
-        
-        
-        
-        response.sendRedirect("MostrarServicio.jsp");
-        
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

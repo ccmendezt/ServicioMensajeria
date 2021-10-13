@@ -25,7 +25,8 @@
             <table class="inicio">
                 <tr>
                     <th><label>Consultar servicio por:</label></th>
-                <th><select name="tipoConsultaS" id="tipoConsultaS">
+                    <th>
+                        <select name="tipoConsultaS" id="tipoConsultaS">
                             <option value="0">Seleccionar</option>
                             <option value="1">Id de servicio</option>
                             <option value="2">Fecha</option>

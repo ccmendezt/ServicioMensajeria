@@ -76,8 +76,7 @@ public class ServicioDAO {
         return s;
     }
     
-    public ResultSet buscarServicioById(int idServicio) throws CaException, SQLException{
-        Servicio s = null;
+    public ResultSet getServicioById(int idServicio) throws CaException, SQLException{
         Connection conexion = null;
         PreparedStatement prepStmt = null;
         ResultSet rs = null;
@@ -89,24 +88,7 @@ public class ServicioDAO {
             
             rs = prepStmt.executeQuery();
             
-            while (rs.next()) {
-                s = new Servicio();
-                s.setIdServicio(rs.getInt("k_idServicio"));
-                s.setF_inicial(rs.getString("f_inicial"));
-                s.setF_horaInicial(rs.getString("f_horainicial"));
-                s.setIdaYVuelta(rs.getString("i_idayvuelta"));
-                s.setCosto(rs.getFloat("v_costo"));
-                s.setF_cambioEstado(rs.getString("f_cambioestado"));
-                s.setCmtCambioEstado(rs.getString("n_cmtcambioestado"));
-                s.setMedioPago(rs.getString("i_mediopago"));
-                s.setIdCiudad(rs.getInt("k_idciudad"));
-                s.setTipoDocCli(rs.getString("k_tipodoccli"));
-                s.setNroDocCli(rs.getLong("k_nrodoccli"));
-                s.setCalificacion(rs.getInt("q_calificacion"));
-                s.setIdTipoPa(rs.getString("k_idtipopaquete"));
-                s.setTipoDocMen(rs.getString("k_tipodocmen"));
-                s.setNroDocMensajero(rs.getLong("k_tipodocmen"));
-            }
+            
             
         } catch (SQLException e) {
             throw new CaException("ServicioDAO", "No pudo encontrar el servicio" + e.getMessage());
@@ -116,8 +98,7 @@ public class ServicioDAO {
         return rs;
     }
     
-    public ResultSet buscarServicioByDate(String fecha) throws CaException,SQLException {
-        Servicio s = null;
+    public ResultSet getServicioByDate(String fecha) throws CaException,SQLException {
         Connection conexion = null;
         PreparedStatement prepStmt = null;
         ResultSet rs = null;
@@ -129,24 +110,6 @@ public class ServicioDAO {
             prepStmt.setDate(1, fechaInicial);
             
             rs = prepStmt.executeQuery();
-            while (rs.next()) {
-                s = new Servicio();
-                s.setIdServicio(rs.getInt("k_idServicio"));
-                s.setF_inicial(rs.getString("f_inicial"));
-                s.setF_horaInicial(rs.getString("f_horainicial"));
-                s.setIdaYVuelta(rs.getString("i_idayvuelta"));
-                s.setCosto(rs.getFloat("v_costo"));
-                s.setF_cambioEstado(rs.getString("f_cambioestado"));
-                s.setCmtCambioEstado(rs.getString("n_cmtcambioestado"));
-                s.setMedioPago(rs.getString("i_mediopago"));
-                s.setIdCiudad(rs.getInt("k_idciudad"));
-                s.setTipoDocCli(rs.getString("k_tipodoccli"));
-                s.setNroDocCli(rs.getLong("k_nrodoccli"));
-                s.setCalificacion(rs.getInt("q_calificacion"));
-                s.setIdTipoPa(rs.getString("k_idtipopaquete"));
-                s.setTipoDocMen(rs.getString("k_tipodocmen"));
-                s.setNroDocMensajero(rs.getLong("k_tipodocmen"));
-            }
         } catch (SQLException e) {
             throw new CaException("ServicioDAO", "No pudo encontrar el servicio" + e.getMessage());
         } finally {
@@ -155,37 +118,17 @@ public class ServicioDAO {
         return rs;
     }
     
-    public ResultSet buscarServicioByCliente(String tipoDoc, Long nroDoc) throws CaException,SQLException {
-        Servicio s = null;
+    public ResultSet getServicioByCliente(Long nroDoc) throws CaException,SQLException {
         Connection conexion = null;
         PreparedStatement prepStmt = null;
         ResultSet rs = null;
         try {
-            String strSQL = "SELECT * FROM servicio WHERE WHERE k_tipodoccli = ? AND k_nrodoccli = ?";
+            String strSQL = "SELECT * FROM servicio WHERE k_nrodoccli = ?";
             conexion = ServiceLocator.getInstance().tomarConexion();
             prepStmt = conexion.prepareStatement(strSQL);
-            prepStmt.setString(1, tipoDoc);
-            prepStmt.setLong(2, nroDoc);
+            prepStmt.setLong(1, nroDoc);
             
             rs = prepStmt.executeQuery();
-            while (rs.next()) {
-                s = new Servicio();
-                s.setIdServicio(rs.getInt("k_idServicio"));
-                s.setF_inicial(rs.getString("f_inicial"));
-                s.setF_horaInicial(rs.getString("f_horainicial"));
-                s.setIdaYVuelta(rs.getString("i_idayvuelta"));
-                s.setCosto(rs.getFloat("v_costo"));
-                s.setF_cambioEstado(rs.getString("f_cambioestado"));
-                s.setCmtCambioEstado(rs.getString("n_cmtcambioestado"));
-                s.setMedioPago(rs.getString("i_mediopago"));
-                s.setIdCiudad(rs.getInt("k_idciudad"));
-                s.setTipoDocCli(rs.getString("k_tipodoccli"));
-                s.setNroDocCli(rs.getLong("k_nrodoccli"));
-                s.setCalificacion(rs.getInt("q_calificacion"));
-                s.setIdTipoPa(rs.getString("k_idtipopaquete"));
-                s.setTipoDocMen(rs.getString("k_tipodocmen"));
-                s.setNroDocMensajero(rs.getLong("k_tipodocmen"));
-            }
 
         } catch (SQLException e) {
             throw new CaException("ServicioDAO", "No pudo encontrar el servicio" + e.getMessage());
