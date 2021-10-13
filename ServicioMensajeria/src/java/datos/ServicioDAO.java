@@ -5,6 +5,7 @@
 package datos;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -26,9 +27,10 @@ public class ServicioDAO {
             String strSQL = "INSERT INTO servicio (f_inicial, f_horainicial, i_idayvuelta, v_costo, i_mediopago, k_idciudad, k_tipodoccli, k_nrodoccli, k_idtipopaquete) VALUES (?,?,?,?,?,?,?,?,?)";
             conexion = ServiceLocator.getInstance().tomarConexion();
             prepStmt = conexion.prepareStatement(strSQL);
-            
-            prepStmt.setString(1, s.getF_inicial());
-            prepStmt.setString(2, s.getF_horaInicial());
+            java.sql.Date fechaInicial = java.sql.Date.valueOf(s.getF_inicial());
+            java.sql.Time fHoraInicial = java.sql.Time.valueOf(s.getF_horaInicial() + ":00");
+            prepStmt.setDate(1, fechaInicial);
+            prepStmt.setTime(2, fHoraInicial);
             prepStmt.setString(3, s.getIdaYVuelta());
             prepStmt.setFloat(4, s.getCosto());
             prepStmt.setString(5, s.getMedioPago());
@@ -45,4 +47,34 @@ public class ServicioDAO {
             ServiceLocator.getInstance().liberarConexion();
         }
     }
+    
+    public Servicio buscarServicio(String fInicio, String fHoraInicio, String volumenPaquete) throws CaException {
+        Servicio s = null;
+        Connection conexion = null;
+        PreparedStatement prepStmt = null;
+        ResultSet rs = null;
+        try {
+            String strSQL = "SELECT k_idServicio, f_inicial, f_horainicial, k_idtipopaquete FROM servicio WHERE f_inicial = ? AND f_horainicial = ? AND k_idtipopaquete = ?";
+            conexion = ServiceLocator.getInstance().tomarConexion();
+            prepStmt = conexion.prepareStatement(strSQL);
+            java.sql.Date fechaInicial = java.sql.Date.valueOf(fInicio);
+            java.sql.Time fHoraInicial = java.sql.Time.valueOf(fHoraInicio + ":00");
+            prepStmt.setDate(1, fechaInicial);
+            prepStmt.setTime(2, fHoraInicial);
+            prepStmt.setString(3, volumenPaquete);
+            rs = prepStmt.executeQuery();
+            while (rs.next()) {
+                s = new Servicio();
+                s.setIdServicio(rs.getInt("k_idServicio"));
+            }
+            prepStmt.close();
+            ServiceLocator.getInstance().commit();
+        } catch (SQLException e) {
+            throw new CaException("ServicioDAO", "No pudo encontrar el servicio" + e.getMessage());
+        } finally {
+            ServiceLocator.getInstance().liberarConexion();
+        }
+        return s;
+    }
+    
 }

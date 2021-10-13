@@ -1,10 +1,14 @@
 <%-- 
-    Document   : InicioSesionCliente
-    Created on : 11/10/2021, 10:02:17 AM
+    Document   : index
+    Created on : 13/10/2021, 12:53:02 AM
     Author     : CRISTIAN CAMILO
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+    HttpSession sesion = request.getSession();
+    sesion.invalidate();
+%>    
 <!DOCTYPE html>
 <html>
     <head>
@@ -12,9 +16,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-        
-        <a href="ProgramarServicio.jsp">Programar servicio</a>
-        <a href="index.jsp">Salir</a>
-        
+        <h1>Iniciar de sesion</h1>
+        <a href="login.jsp">Iniciar Sesion</a>
     </body>
 </html>

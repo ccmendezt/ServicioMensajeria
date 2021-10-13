@@ -13,6 +13,22 @@
     Object tipoServicio = (String) sesion.getAttribute("tipoServicio");
     Object medioPago = (String) sesion.getAttribute("medioPago");
     Object volumenPaquete = (String) sesion.getAttribute("volumenPaquete");
+    String i_tipoPaquete = "";
+    if (volumenPaquete.equals("DC")) {
+        i_tipoPaquete = "Documentos";
+    } else {
+        if (volumenPaquete.equals("PQ")) {
+            i_tipoPaquete = "Paquete pequeño";
+        } else {
+            if (volumenPaquete.equals("PM")) {
+                i_tipoPaquete = "Paquete mediano";
+            }else{
+                if (volumenPaquete.equals("PG")) {
+                i_tipoPaquete = "Paquete grande";
+            }
+            }
+        }
+    };
     Object nroDir = sesion.getAttribute("nroDir");
     Object nroDirecciones = (Integer) nroDir;
     Object direcciones[] = new String[(Integer) nroDirecciones];
@@ -45,17 +61,17 @@
         <label>Hora del servicio: <%= fHoraInicio%></label><br>
         <label>Tipo de servicio: <%= tipoServicio%></label><br>
         <label>Medio de pago: <%= medioPago%></label><br> 
-        <label>Tipo de paquete: <%= volumenPaquete%></label><br>
+        <label>Tipo de paquete: <%= i_tipoPaquete%></label><br>
         <label>Numero de direcciones: <%= nroDir%></label><br>
-        <% 
+        <%
             for (int i = 0; i < (Integer) nroDirecciones; i++) {%>
-                <label>Direccion <%= i+1%>: <%= direcciones[i]%></label><br>
-                <label>Indicacion <%= i+1%>: <%= indicaciones[i]%></label><br>
-                <%
+        <label>Direccion <%= i + 1%>: <%= direcciones[i]%></label><br>
+        <label>Indicacion <%= i + 1%>: <%= indicaciones[i]%></label><br>
+        <%
             }
         %>
         <label>El valor del servicio será de: $<%= costoServicio%></label><br>
-        <button onclick="location.href='InicioSesionCliente.jsp'">Cancelar Servicio</button>
-        <button type="button" class="btn btn-primary" onclick="location.href='AgregarServicio'">Programar Servicio</button>
+        <button onclick="location.href = 'InicioSesionCliente.jsp'">Cancelar Servicio</button>
+        <button type="button" class="btn btn-primary" onclick="location.href = 'AgregarServicio'">Programar Servicio</button>
     </body>
 </html>

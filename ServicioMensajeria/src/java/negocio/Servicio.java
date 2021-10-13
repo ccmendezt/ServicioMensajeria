@@ -4,6 +4,10 @@
  */
 package negocio;
 
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
+import java.util.Date;
+
 /**
  *
  * @author CRISTIAN CAMILO
@@ -150,6 +154,21 @@ public class Servicio {
 
     public void setCosto(float costo) {
         this.costo = costo;
+    }
+    
+    
+    public static Date ParseFecha(String fecha)
+    {
+        SimpleDateFormat formato = new SimpleDateFormat("yyyy/MM/dd");
+        Date fechaDate = null;
+        try {
+            fechaDate = formato.parse(fecha);
+        } 
+        catch (ParseException ex) 
+        {
+            System.out.println(ex);
+        }
+        return fechaDate;
     }
     
     

@@ -4,6 +4,7 @@
  */
 package servlets;
 
+import datos.DireccionDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Level;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import util.CaException;
 import datos.ServicioDAO;
+import negocio.Direccion;
 import negocio.Servicio;
 
 /**
@@ -48,45 +50,68 @@ public class AgregarServicio extends HttpServlet {
         int nroDir = (Integer) sesion.getAttribute("nroDir");
         float costo = (float) sesion.getAttribute("costoServicio");
         String i_tipoSer = "", i_medioPago = "";
-        if(tipoServicio.equals("ida")){
+        if (tipoServicio.equals("ida")) {
             i_tipoSer = "I";
-        }else{
+        } else {
             i_tipoSer = "V";
         }
-        if(medioPago.equals("efectivo")){
+        if (medioPago.equals("efectivo")) {
             i_medioPago = "E";
-        }else{
+        } else {
             i_medioPago = "P";
         }
-        
-        java.util.Date utilDate = new java.util.Date();
-        long lnMilisegundos = utilDate.getTime();
-        java.sql.Timestamp sqlTimestamp = new java.sql.Timestamp(lnMilisegundos);
-        
-        ServicioDAO servicioDAO = new ServicioDAO();
-        Servicio servicio = new Servicio(idCiudad, tipoDocUser, usuario, volumenPaquete, fInicio, fHoraInicio, i_tipoSer, i_medioPago, costo);
-        servicioDAO.programarServicio(servicio);
-        
-        try (PrintWriter out = response.getWriter()) {
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet asd</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h2>Id ciudad Servicio " + idCiudad + "</h2>");
-            out.println("<h2>Tipo usuario " + tipoDocUser + "</h2>");
-            out.println("<h2>Doc user " + usuario + "</h2>");
-            out.println("<h2>Tipo de servicio " + i_tipoSer + "</h2>");
-            out.println("<h2>Fecha inicial " + fInicio + "</h2>");
-            out.println("<h2>Hora inicial" + fHoraInicio + "</h2>");
-            out.println("<h2>Volumen Paquete" + volumenPaquete + "</h2>");
-            out.println("<h2>Medio de pago " + i_medioPago + "</h2>");
-            out.println("<h2>El costo del servicio es " + costo + "</h2>");
-            
-            out.println("</body>");
-            out.println("</html>");
+        Object direcciones[] = new String[nroDir];
+        Object indicaciones[] = new String[nroDir];
+        String dir = "direccion";
+        String com = "comentario";
+        int temp = 0;
+        for (int i = 0; i < nroDir; i++) {
+            temp = i + 1;
+            dir = dir + String.valueOf(temp);
+            com = com + String.valueOf(temp);
+            direcciones[i] = (String) sesion.getAttribute(dir);
+            indicaciones[i] = (String) sesion.getAttribute(com);
+            dir = "direccion";
+            com = "comentario";
         }
+
+        /*java.util.Date utilDate = new java.util.Date();
+        long lnMilisegundos = utilDate.getTime();
+        java.sql.Timestamp sqlTimestamp = new java.sql.Timestamp(lnMilisegundos);*/
+        ServicioDAO servicioDAO = new ServicioDAO();
+        Servicio s = new Servicio(idCiudad, tipoDocUser, usuario, volumenPaquete, fInicio, fHoraInicio, i_tipoSer, i_medioPago, costo);
+        servicioDAO.programarServicio(s);
+
+        DireccionDAO dirDAO = new DireccionDAO();
+        Direccion dirServicio = new Direccion();
+        s = servicioDAO.buscarServicio(fInicio, fHoraInicio, volumenPaquete);
+        dirServicio.setIdServicio(s.getIdServicio());
+        for (int i = 0; i < nroDir; i++) {
+            dirServicio.setDireccion(fInicio);
+            dirServicio.setDireccion((String) direcciones[i]);
+            dirServicio.setActividad((String) indicaciones[i]);
+            dirDAO.programarServicio(dirServicio);
+        }
+
+        PrintWriter out = response.getWriter();
+        out.println("<!DOCTYPE html>");
+        out.println("<html>");
+        out.println("<head>");
+        out.println("<title></title>");
+        out.println("</head>");
+        out.println("<body>");
+        out.println("<script>");
+        out.println("window.onload = function () {");
+        out.println("alert(\"Servicio programado exitosamente\");");
+        out.println("window.location.href = \"InicioSesionCliente.jsp\";");
+        out.println("};");
+        out.println("</script>");
+        out.println("</body>");
+        out.println("</html>");
+
+        //sesion.setAttribute("servicioExitoso", "true");
+        //sesion.setAttribute("programarServicio", "El servicio ha sido programado con éxito");
+        //response.sendRedirect("InicioSesionCliente.jsp");
 
     }
 
