@@ -7,7 +7,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
     HttpSession sesion = request.getSession();
-    Object idServicio = (Integer) sesion.getAttribute("idServicio");
     Object ciudadServicio = (String) sesion.getAttribute("ciudadServicio");
     Object fInicio = (String) sesion.getAttribute("fInicio");
     Object fHoraInicio = (String) sesion.getAttribute("fHoraInicio");
@@ -60,11 +59,10 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Factura del servicio</title>
+        <title>Pre-Factura del servicio</title>
     </head>
     <body>
-        <h1>Servicio</h1>
-        <label>Id del servicio: <%= idServicio%></label><br>
+        <h1>Solicitud de servicio</h1>
         <label>Ciudad del servicio: <%= ciudadServicio%></label><br>
         <label>Fecha del servicio: <%= fInicio%></label><br>
         <label>Hora del servicio: <%= fHoraInicio%></label><br>
@@ -79,7 +77,8 @@
         <%
             }
         %>
-        <label>El valor del servicio es de: $<%= costoServicio%></label><br>
-        <button onclick="location.href = 'InicioSesionCliente.jsp'">Inicio</button>
+        <label>El valor del servicio será de: $<%= costoServicio%></label><br>
+        <button onclick="location.href = 'InicioSesionCliente.jsp'">Cancelar Servicio</button>
+        <button type="button" class="btn btn-primary" onclick="location.href = 'AgregarServicio'">Programar Servicio</button>
     </body>
 </html>

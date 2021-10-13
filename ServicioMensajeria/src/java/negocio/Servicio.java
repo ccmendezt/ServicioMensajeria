@@ -14,8 +14,8 @@ import java.util.Date;
  */
 public class Servicio {
 
-    private int idServicio, idCiudad, calificacion, nroDocMensajero;
-    private Long nroDocCli;
+    private int idServicio, idCiudad, calificacion;
+    private Long nroDocCli, nroDocMensajero;
     private String f_inicial, f_horaInicial, idaYVuelta, f_cambioEstado, cmtCambioEstado, medioPago, tipoDocCli, tipoDocMen, idTipoPa;
     private float costo;
 
@@ -31,6 +31,24 @@ public class Servicio {
         this.idaYVuelta = idaYVuelta;
         this.medioPago = medioPago;
         this.tipoDocCli = tipoDocCli;
+        this.costo = costo;
+    }
+
+    public Servicio(int idServicio, int idCiudad, int calificacion, long nroDocMensajero, long nroDocCli, String f_inicial, String f_horaInicial, String idaYVuelta, String f_cambioEstado, String cmtCambioEstado, String medioPago, String tipoDocCli, String tipoDocMen, String idTipoPa, float costo) {
+        this.idServicio = idServicio;
+        this.idCiudad = idCiudad;
+        this.calificacion = calificacion;
+        this.nroDocMensajero = nroDocMensajero;
+        this.nroDocCli = nroDocCli;
+        this.f_inicial = f_inicial;
+        this.f_horaInicial = f_horaInicial;
+        this.idaYVuelta = idaYVuelta;
+        this.f_cambioEstado = f_cambioEstado;
+        this.cmtCambioEstado = cmtCambioEstado;
+        this.medioPago = medioPago;
+        this.tipoDocCli = tipoDocCli;
+        this.tipoDocMen = tipoDocMen;
+        this.idTipoPa = idTipoPa;
         this.costo = costo;
     }
     
@@ -76,11 +94,11 @@ public class Servicio {
         this.idTipoPa = idTipoPa;
     }
 
-    public int getNroDocMensajero() {
+    public long getNroDocMensajero() {
         return nroDocMensajero;
     }
 
-    public void setNroDocMensajero(int nroDocMensajero) {
+    public void setNroDocMensajero(long nroDocMensajero) {
         this.nroDocMensajero = nroDocMensajero;
     }
 

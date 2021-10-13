@@ -23,7 +23,7 @@
     <body>
         <div id="centrar">
         <button type="submit" class="btn btn-primary" <button onclick="window.location.href='ProgramarServicio.jsp'">Programar servicio</button>
-        <button type="submit" class="btn btn-primary" <button onclick="window.location.href='ServiciosProgramados.jsp'">Servicios programados</button>
+        <button type="submit" class="btn btn-primary" <button onclick="window.location.href='ConsultarServicio.jsp'">Consultar servicios</button>
         <button type="submit" class="btn btn-primary" <button onclick="window.location.href='index.jsp'">Salir</button>
         </div>
         <div class="three"><img src="css/img/pauta1.png" alt="alt"/>

@@ -122,7 +122,7 @@ public class ProgramarServicio extends HttpServlet {
             com = "comentario";
         }
         
-        response.sendRedirect("FacturaServicio.jsp");
+        response.sendRedirect("PreFacturaServicio.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

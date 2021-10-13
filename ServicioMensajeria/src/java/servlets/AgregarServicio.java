@@ -80,13 +80,13 @@ public class AgregarServicio extends HttpServlet {
         java.sql.Timestamp sqlTimestamp = new java.sql.Timestamp(lnMilisegundos);*/
         ServicioDAO servicioDAO = new ServicioDAO();
         Servicio s = new Servicio(idCiudad, tipoDocUser, usuario, volumenPaquete, fInicio, fHoraInicio, i_tipoSer, i_medioPago, costo);
-        sesion.setAttribute("serviciosProgramados", s);
         servicioDAO.programarServicio(s);
 
         DireccionDAO dirDAO = new DireccionDAO();
         Direccion dirServicio = new Direccion();
         s = servicioDAO.buscarServicio(fInicio, fHoraInicio, volumenPaquete);
         dirServicio.setIdServicio(s.getIdServicio());
+        sesion.setAttribute("idServicio", s.getIdServicio());
         for (int i = 0; i < nroDir; i++) {
             dirServicio.setDireccion(fInicio);
             dirServicio.setDireccion((String) direcciones[i]);
@@ -103,8 +103,8 @@ public class AgregarServicio extends HttpServlet {
         out.println("<body>");
         out.println("<script>");
         out.println("window.onload = function () {");
-        out.println("alert(\"Servicio programado exitosamente\");");
-        out.println("window.location.href = \"InicioSesionCliente.jsp\";");
+        out.println("alert(\"Servicio programado exitosamente.\")");
+        out.println("window.location.href = \"FacturaServicio.jsp\";");
         out.println("};");
         out.println("</script>");
         out.println("</body>");

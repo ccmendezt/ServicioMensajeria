@@ -25,21 +25,21 @@
             <table class="inicio">
                 <tr>
                     <th> <label>Iniciar sesion como:</label></th>
-                    <th><select name="tipoUsuario">
+                    <th><select name="tipoUsuario" required>
                             <option value="cli">Cliente</option> 
                             <option value="men">Mensajero</option> 
                         </select><br></th>
                 </tr>
                 <tr>
                     <td><label>Usuario</label></td>
-                    <td><input type="text" name="user" placeholder="ejemplo@gmail.com" /><br></td>
+                    <td><input type="text" name="user" placeholder="ejemplo@gmail.com" required/><br></td>
                 </tr>
                 <tr>
                     <td><label>Contraseña</label></td>
-                    <td><input type="password" name="pass" placeholder="contraseña" /><br></td>
+                    <td><input type="password" name="pass" placeholder="contraseña" required/><br></td>
                 </tr>
             </table>
-            <div id="boton"><input type="submit" class="btn btn-primary" value="Enviar" /></div>     
+            <div id="boton"><input type="submit" class="btn btn-primary" value="Enviar" /></div>
         </form>
     </body>
 </html>
