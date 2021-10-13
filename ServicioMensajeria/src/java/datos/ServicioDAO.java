@@ -76,7 +76,7 @@ public class ServicioDAO {
         return s;
     }
     
-    public ResultSet buscarServicioById(int idServicio) throws CaException {
+    public ResultSet buscarServicioById(int idServicio) throws CaException, SQLException{
         Servicio s = null;
         Connection conexion = null;
         PreparedStatement prepStmt = null;
@@ -88,6 +88,7 @@ public class ServicioDAO {
             prepStmt.setInt(1, idServicio);
             
             rs = prepStmt.executeQuery();
+            
             while (rs.next()) {
                 s = new Servicio();
                 s.setIdServicio(rs.getInt("k_idServicio"));
@@ -115,7 +116,7 @@ public class ServicioDAO {
         return rs;
     }
     
-    public ResultSet buscarServicioByDate(String fecha) throws CaException {
+    public ResultSet buscarServicioByDate(String fecha) throws CaException,SQLException {
         Servicio s = null;
         Connection conexion = null;
         PreparedStatement prepStmt = null;
@@ -154,7 +155,7 @@ public class ServicioDAO {
         return rs;
     }
     
-    public ResultSet buscarServicioByCliente(String tipoDoc, Long nroDoc) throws CaException {
+    public ResultSet buscarServicioByCliente(String tipoDoc, Long nroDoc) throws CaException,SQLException {
         Servicio s = null;
         Connection conexion = null;
         PreparedStatement prepStmt = null;

@@ -23,7 +23,12 @@
             <% while (servicio.next()) {%>
             <tr>
                 <td><%= servicio.getInt("k_idCiudad")%></td>
-                
+                <td><%= servicio.getString("f_inicial")%></td>
+                <td><%= servicio.getString("f_horainicial")%></td>
+                <td><%= servicio.getString("i_idayvuelta")%></td>
+                <td><%= servicio.getString("i_mediopago")%></td>
+                <td><%= servicio.getString("k_idtipopaquete")%></td>
+                <td><%= servicio.getString("v_costo")%></td>
             </tr>
             <% }%>
         </table>

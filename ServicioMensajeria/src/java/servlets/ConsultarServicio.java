@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import datos.ServicioDAO;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpSession;
@@ -35,7 +36,7 @@ public class ConsultarServicio extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, CaException {
+            throws ServletException, IOException, CaException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession sesion = request.getSession();
         int opcion = 0, idServicio = 0;
@@ -43,15 +44,18 @@ public class ConsultarServicio extends HttpServlet {
         String fechaServicio = "", tipoDocCli = "";
         ServicioDAO servDAO = new ServicioDAO();
         ResultSet rs = null;
+        String id = "";
         opcion = Integer.parseInt(request.getParameter("tipoConsultaS"));
-        if(opcion == 1){
+        
             idServicio = Integer.parseInt(request.getParameter("idServicio"));
             rs = servDAO.buscarServicioById(idServicio);
             sesion.setAttribute("consultaServicio", rs);
+            id = rs.getString(1);
+        /*if(opcion == 1){
         }else{
             if(opcion == 2){
                 fechaServicio = request.getParameter("fInicio");
-                rs = servDAO.buscarServicioById(idServicio);
+                rs = servDAO.buscarServicioByDate(fechaServicio);
                 sesion.setAttribute("consultaServicio", rs);
             }else{
                 if(opcion == 3){
@@ -61,9 +65,25 @@ public class ConsultarServicio extends HttpServlet {
                     sesion.setAttribute("consultaServicio", rs);
                 }
             }
-        }
+        }*/
         
-        response.sendRedirect("MostrarServicio.jsp");
+        
+        
+        
+        PrintWriter out = response.getWriter();
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet asd</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h2>id servicio " + id + "</h2>");
+            out.println("<h2>fecha servicio " + fechaServicio + "</h2>");
+            out.println("<h2>nroDoc " + nroDocCli + "</h2>");
+            out.println("</body>");
+            out.println("</html>");
+        //response.sendRedirect("MostrarServicio.jsp");
         
         
     }
@@ -84,6 +104,8 @@ public class ConsultarServicio extends HttpServlet {
             processRequest(request, response);
         } catch (CaException ex) {
             Logger.getLogger(ConsultarServicio.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(ConsultarServicio.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -101,6 +123,8 @@ public class ConsultarServicio extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (CaException ex) {
+            Logger.getLogger(ConsultarServicio.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
             Logger.getLogger(ConsultarServicio.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
