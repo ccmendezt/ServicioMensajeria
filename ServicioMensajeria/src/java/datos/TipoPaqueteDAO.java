@@ -17,7 +17,7 @@ import negocio.TipoPaquete;
  * @author CRISTIAN CAMILO
  */
 public class TipoPaqueteDAO {
-    public TipoPaquete getTipoP(int idTipoP) throws CaException {
+    public TipoPaquete buscarTipoP(String idTipoP) throws CaException {
         TipoPaquete tp = null;
         Connection conexion = null;
         PreparedStatement prepStmt = null;
@@ -27,13 +27,13 @@ public class TipoPaqueteDAO {
             conexion = ServiceLocator.getInstance().tomarConexion();
             prepStmt = conexion.prepareStatement(strSQL);
 
-            prepStmt.setInt(1, idTipoP);
+            prepStmt.setString(1, idTipoP);
 
             rs = prepStmt.executeQuery();
 
             while (rs.next()) {
                 tp = new TipoPaquete();
-                tp.setIdTipoPaquete(rs.getInt("k_idTipoP"));
+                tp.setIdTipoPaquete(rs.getString("k_idTipoP"));
                 tp.setNombreTipoP(rs.getString("n_nombreTipoP"));
                 tp.setTarifaPaquete(rs.getFloat("q_tarifaPaquete"));
             }

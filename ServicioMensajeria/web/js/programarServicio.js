@@ -23,7 +23,7 @@ function validarFecha() {
     
 }
 
-function validarHora() { 
+/*function validarHora() { 
     var fecha = new Date();
     var anio = fecha.getFullYear();
     var dia = fecha.getDate();
@@ -49,10 +49,98 @@ function validarHora() {
     }else{
         alert("Las fechas NO son iguales");
     }
+}*/
+
+function fadeOutEffectInput(elements){
+    var elementSelected = document.getElementById(elements);
+    var fadeEffect = setInterval(function(){
+        // if(!elementSelected.style.opacity){
+        //     elementSelected.style.opacity = 1;
+        // }
+
+        if(elementSelected.style.opacity > 0){
+            elementSelected.style.opacity = 0;
+            if(elementSelected.style.opacity == 0){
+                elementSelected.style.display = "none";
+            }
+        }else{
+            clearInterval(fadeEffect);
+        }
+    }, 200);
 }
 
-function generarDir(){
-    var nroDirecciones = document.getElementById("nroDir").value();
-    //Generar las direcciones con un innerHTML
-    // Y se podría hacer un metodo en el DAO de agregar una direccion, y llamalo la cantidad de veces que indique el nroDirecciones
+function fadeInEffectInput(elements){
+    var elementSelected = document.getElementById(elements);
+    var fadeEffect = setInterval(function(){
+        if(!elementSelected.style.opacity){
+            elementSelected.style.opacity = 0;
+        }
+
+        if(elementSelected.style.opacity < 1){
+            elementSelected.style.opacity += 1;
+            elementSelected.style.display = "block"
+        }else{
+            clearInterval(fadeEffect);
+        }
+    }, 200);
 }
+
+var nroDir = document.getElementById("nroDir");
+nroDir.addEventListener("change", event => {
+    var elementSelected = nroDir.options[nroDir.selectedIndex].value;
+    console.log(elementSelected)
+    switch(elementSelected){
+        case "0":
+            fadeOutEffectInput("texto1")
+            fadeOutEffectInput("texto2")
+            fadeOutEffectInput("texto3")
+            fadeOutEffectInput("texto4")
+            break;
+        // case "1":
+        //     fadeOutEffectInput("texto2")
+        //     fadeOutEffectInput("texto3")
+        //     fadeOutEffectInput("texto4")
+
+        //     fadeInEffectInput("texto1")
+        //     break;
+        case "2":
+            fadeOutEffectInput("texto3")
+            fadeOutEffectInput("texto4")
+
+            fadeInEffectInput("texto1")
+            fadeInEffectInput("texto2")
+            break;
+        case "3":
+            fadeOutEffectInput("texto4")
+
+            fadeInEffectInput("texto1")
+            fadeInEffectInput("texto2")
+            fadeInEffectInput("texto3")
+            break;
+        case "4":
+            fadeInEffectInput("texto1")
+            fadeInEffectInput("texto2")
+            fadeInEffectInput("texto3")
+            fadeInEffectInput("texto4")
+            break;
+        default:
+            alert("Seleccion invalida");
+            break;
+    }
+})
+
+var tipoServicio = document.getElementById("tipoServicio");
+tipoServicio.addEventListener("change", event => {
+    var elementSelected = tipoServicio.options[tipoServicio.selectedIndex].value;
+    console.log(elementSelected)
+    switch(elementSelected){
+        case "ida":
+            break;
+        case "vuelta":
+            alert("El domiciliario regresara a la primera direccion")
+            break;
+        default:
+            alert("Seleccion invalida");
+            break;
+    }
+})

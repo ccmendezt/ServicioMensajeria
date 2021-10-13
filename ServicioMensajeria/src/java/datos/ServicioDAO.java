@@ -6,6 +6,7 @@ package datos;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import util.ServiceLocator;
 import negocio.Servicio;
@@ -19,22 +20,27 @@ public class ServicioDAO {
     //private Servicio s;
     
     public void programarServicio(Servicio s) throws CaException {
+        Connection conexion = null;
+        PreparedStatement prepStmt = null;
         try {
-            String strSQL = "INSERT INTO servicio (n_nombrePersonaje, q_vida, q_ataque, q_mana, n_foto, n_estilo) VALUES(?,?,?,?,?,?)";
-            Connection conexion = ServiceLocator.getInstance().tomarConexion();
-            PreparedStatement prepStmt = conexion.prepareStatement(strSQL);
-
-            /*prepStmt.setString(1, magoBlanco.getNombre());
-            prepStmt.setInt(2, magoBlanco.getVida());
-            prepStmt.setInt(3, magoBlanco.getAtaque());
-            prepStmt.setInt(4, magoBlanco.getMana());
-            prepStmt.setString(5, magoBlanco.getFoto());
-            prepStmt.setString(6, magoBlanco.getEstilo());
+            String strSQL = "INSERT INTO servicio (f_inicial, f_horainicial, i_idayvuelta, v_costo, i_mediopago, k_idciudad, k_tipodoccli, k_nrodoccli, k_idtipopaquete) VALUES (?,?,?,?,?,?,?,?,?)";
+            conexion = ServiceLocator.getInstance().tomarConexion();
+            prepStmt = conexion.prepareStatement(strSQL);
+            
+            prepStmt.setString(1, s.getF_inicial());
+            prepStmt.setString(2, s.getF_horaInicial());
+            prepStmt.setString(3, s.getIdaYVuelta());
+            prepStmt.setFloat(4, s.getCosto());
+            prepStmt.setString(5, s.getMedioPago());
+            prepStmt.setInt(6, s.getIdCiudad());
+            prepStmt.setString(7, s.getTipoDocCli());
+            prepStmt.setLong(8, s.getNroDocCli());
+            prepStmt.setString(9, s.getIdTipoPa());
             prepStmt.executeUpdate();
-            prepStmt.close();*/
+            prepStmt.close();
             ServiceLocator.getInstance().commit();
         } catch (SQLException e) {
-            throw new CaException("PersonajeDAO", "No pudo crear el personaje" + e.getMessage());
+            throw new CaException("ServicioDAO", "No pudo crear el servicio" + e.getMessage());
         } finally {
             ServiceLocator.getInstance().liberarConexion();
         }

@@ -18,7 +18,7 @@ import negocio.Ciudad;
  */
 public class CiudadDAO {
 
-    public Ciudad getCiudad(int idCiudad) throws CaException {
+    public Ciudad buscarCiudad(int idCiudad) throws CaException {
         Ciudad c = null;
         Connection conexion = null;
         PreparedStatement prepStmt = null;

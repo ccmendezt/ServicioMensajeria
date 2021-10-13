@@ -15,10 +15,13 @@ import javax.servlet.http.HttpSession;
 import datos.ServicioDAO;
 import datos.CiudadDAO;
 import datos.TipoPaqueteDAO;
+import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import negocio.Servicio;
 import negocio.Ciudad;
 import negocio.TipoPaquete;
-
+import util.CaException;
 
 /**
  *
@@ -37,43 +40,92 @@ public class ProgramarServicio extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        
+            throws ServletException, IOException, CaException {
+
         HttpSession sesion = request.getSession();
+
         Object usuario = (String) sesion.getAttribute("userCli");
         Object tipoDocUser = (String) sesion.getAttribute("tipoDocCli");
-        
-        ServicioDAO servDAO = new ServicioDAO();
-        Servicio servicio = new Servicio();
-        CiudadDAO ciudadDAO = new CiudadDAO();
-        Ciudad ciudad = new Ciudad();
-        TipoPaqueteDAO tpDAO = new TipoPaqueteDAO();
-        TipoPaquete tp = new TipoPaquete();
-        
-        
-        
-        String diaForm, horaForm, tipoServForm, medioPagoForm, volPaqForm;
+
+        String StrCiudad = null, diaForm, horaForm, tipoServForm, medioPagoForm, volPaqForm;
         int ciudadForm, nroDirForm;
-        
+
         ciudadForm = Integer.parseInt(request.getParameter("ciudad"));
+        if(ciudadForm == 11001){
+            StrCiudad = "Bogota";
+        }else{
+            if(ciudadForm == 15001){
+                StrCiudad = "Tunja";
+            }
+        }  
+        
         diaForm = request.getParameter("fInicio");
         horaForm = request.getParameter("fHoraInicio");
         tipoServForm = request.getParameter("tipoServicio");
         medioPagoForm = request.getParameter("medioPago");
         volPaqForm = request.getParameter("volumenPaquete");
         nroDirForm = Integer.parseInt(request.getParameter("nroDir"));
-        /*user = request.getParameter("user");
-        pass = Long.parseLong(request.getParameter("pass"));*/
+        String direcciones[] = new String[nroDirForm];
+        String indicaciones[] = new String[nroDirForm];
+        String dir = "direccion";
+        String com = "comentario";
+        int temp = 0;
+        for (int i = 0; i < nroDirForm; i++) {
+            temp = i+1;
+            dir = dir + String.valueOf(temp);
+            com = com + String.valueOf(temp);
+            direcciones[i] = request.getParameter(dir);
+            indicaciones[i] = request.getParameter(com);
+            dir = "direccion";
+            com = "comentario";
+        }
+
+        CiudadDAO ciudadDAO = new CiudadDAO();
+        Ciudad ciudad = new Ciudad();
+        TipoPaqueteDAO tpDAO = new TipoPaqueteDAO();
+        TipoPaquete tp = new TipoPaquete();
+        ciudad = ciudadDAO.buscarCiudad(ciudadForm);
+        tp = tpDAO.buscarTipoP(volPaqForm);
         
+        //  Costo Ida: (nroDir-1)*(precioTrayectoCiudad + Precio Paquete)
+        //  Costo Ida y Vuelta: (nroDir)*(precioTrayectoCiudad + Precio Paquete)
         
+
+        float costo = 0;
+        if (tipoServForm.equals("ida")) {
+            costo = (nroDirForm - 1) * (ciudad.getPrecioTrayecto() + tp.getTarifaPaquete());
+        } else {
+            if (tipoServForm.equals("vuelta")) {
+                costo = (nroDirForm) * (ciudad.getPrecioTrayecto() + tp.getTarifaPaquete());
+            }
+        }
+
+        sesion.setAttribute("idCiudad", ciudadForm);
+        sesion.setAttribute("ciudadServicio", StrCiudad);
+        sesion.setAttribute("fInicio", diaForm);
+        sesion.setAttribute("fHoraInicio", horaForm);
+        sesion.setAttribute("tipoServicio", tipoServForm);
+        sesion.setAttribute("medioPago", medioPagoForm);
+        sesion.setAttribute("volumenPaquete", volPaqForm);
+        sesion.setAttribute("nroDir", nroDirForm);
+        sesion.setAttribute("costoServicio", costo);
+        dir = "direccion";
+        com = "comentario";
+        temp = 0;
+        for (int i = 0; i < nroDirForm; i++) {
+            temp = i+1;
+            dir = dir + String.valueOf(temp);
+            com = com + String.valueOf(temp);
+            sesion.setAttribute(dir, direcciones[i]);
+            sesion.setAttribute(com, indicaciones[i]);
+            dir = "direccion";
+            com = "comentario";
+        }
         
-        
-        response.setContentType("text/html;charset=UTF-8");
-        
-        
-        
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
+
+        response.sendRedirect("FacturaServicio.jsp");
+
+        /*try (PrintWriter out = response.getWriter()) {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
@@ -86,18 +138,18 @@ public class ProgramarServicio extends HttpServlet {
             out.println("<h2>Hora servicio " + horaForm + "</h2>");
             out.println("<h2>Usuario cliente " + usuario + "</h2>");
             out.println("<h2>Tipo doc cliente " + tipoDocUser + "</h2>");
+            out.println("<h2>Tipo de servicio " + tipoServForm + "</h2>");
+            out.println("<h2>Tarifa ciudad " + ciudad.getPrecioTrayecto() + "</h2>");
+            out.println("<h2>Tarifa paquete " + tp.getTarifaPaquete() + "</h2>");
+            out.println("<h2>El costo del servicio es " + costo + "</h2>");
+            for(int i=0; i<nroDirForm; i++){
+                out.println("<h2>Direcciones " + direcciones[i] + "</h2>");
+                out.println("<h2>Comentarios " + indicaciones[i] + "</h2>");
+            }
+            
             out.println("</body>");
             out.println("</html>");
-        }
-    }
-    
-    public float costoServicio(int ciudad, String tipoServicio, String volPaquete, int nroDir){
-        float costo = 0;
-        
-        
-        
-        
-        return costo;
+        }*/
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -112,7 +164,11 @@ public class ProgramarServicio extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (CaException ex) {
+            Logger.getLogger(ProgramarServicio.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -126,7 +182,11 @@ public class ProgramarServicio extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (CaException ex) {
+            Logger.getLogger(ProgramarServicio.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

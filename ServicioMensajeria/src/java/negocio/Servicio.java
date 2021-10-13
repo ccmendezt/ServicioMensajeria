@@ -10,11 +10,27 @@ package negocio;
  */
 public class Servicio {
 
-    private int idServicio, idCiudad, nroDocCli, calificacion, idTipoPa, nroDocMensajero;
-    private String f_inicial, f_horaInicial, idaYVuelta, f_cambioEstado, cmtCambioEstado, medioPago, tipoDocCli, tipoDocMen;
+    private int idServicio, idCiudad, calificacion, nroDocMensajero;
+    private Long nroDocCli;
+    private String f_inicial, f_horaInicial, idaYVuelta, f_cambioEstado, cmtCambioEstado, medioPago, tipoDocCli, tipoDocMen, idTipoPa;
+    private float costo;
 
     public Servicio() {
     }
+
+    public Servicio(int idCiudad, String tipoDocCli, Long nroDocCli, String idTipoPa, String f_inicial, String f_horaInicial, String idaYVuelta, String medioPago, float costo) {
+        this.idCiudad = idCiudad;
+        this.nroDocCli = nroDocCli;
+        this.idTipoPa = idTipoPa;
+        this.f_inicial = f_inicial;
+        this.f_horaInicial = f_horaInicial;
+        this.idaYVuelta = idaYVuelta;
+        this.medioPago = medioPago;
+        this.tipoDocCli = tipoDocCli;
+        this.costo = costo;
+    }
+    
+    
 
     public int getIdServicio() {
         return idServicio;
@@ -32,11 +48,11 @@ public class Servicio {
         this.idCiudad = idCiudad;
     }
 
-    public int getNroDocCli() {
+    public Long getNroDocCli() {
         return nroDocCli;
     }
 
-    public void setNroDocCli(int nroDocCli) {
+    public void setNroDocCli(Long nroDocCli) {
         this.nroDocCli = nroDocCli;
     }
 
@@ -48,11 +64,11 @@ public class Servicio {
         this.calificacion = calificacion;
     }
 
-    public int getIdTipoPa() {
+    public String getIdTipoPa() {
         return idTipoPa;
     }
 
-    public void setIdTipoPa(int idTipoPa) {
+    public void setIdTipoPa(String idTipoPa) {
         this.idTipoPa = idTipoPa;
     }
 
@@ -127,5 +143,15 @@ public class Servicio {
     public void setTipoDocMen(String tipoDocMen) {
         this.tipoDocMen = tipoDocMen;
     }
+
+    public float getCosto() {
+        return costo;
+    }
+
+    public void setCosto(float costo) {
+        this.costo = costo;
+    }
+    
+    
 
 }

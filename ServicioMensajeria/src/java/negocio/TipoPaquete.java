@@ -10,18 +10,18 @@ package negocio;
  */
 public class TipoPaquete {
 
-    private int idTipoPaquete;
+    private String idTipoPaquete;
     private String nombreTipoP;
     private float tarifaPaquete;
 
     public TipoPaquete() {
     }
 
-    public int getIdTipoPaquete() {
+    public String getIdTipoPaquete() {
         return idTipoPaquete;
     }
 
-    public void setIdTipoPaquete(int idTipoPaquete) {
+    public void setIdTipoPaquete(String idTipoPaquete) {
         this.idTipoPaquete = idTipoPaquete;
     }
 
