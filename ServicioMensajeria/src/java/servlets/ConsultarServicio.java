@@ -50,7 +50,7 @@ public class ConsultarServicio extends HttpServlet {
             idServicio = Integer.parseInt(request.getParameter("idServicio"));
             rs = servDAO.buscarServicioById(idServicio);
             sesion.setAttribute("consultaServicio", rs);
-            id = rs.getString(1);
+            //id = rs.getString(1);
         /*if(opcion == 1){
         }else{
             if(opcion == 2){
@@ -70,20 +70,8 @@ public class ConsultarServicio extends HttpServlet {
         
         
         
-        PrintWriter out = response.getWriter();
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet asd</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h2>id servicio " + id + "</h2>");
-            out.println("<h2>fecha servicio " + fechaServicio + "</h2>");
-            out.println("<h2>nroDoc " + nroDocCli + "</h2>");
-            out.println("</body>");
-            out.println("</html>");
-        //response.sendRedirect("MostrarServicio.jsp");
+        
+        response.sendRedirect("MostrarServicio.jsp");
         
         
     }

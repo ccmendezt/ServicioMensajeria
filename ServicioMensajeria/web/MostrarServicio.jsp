@@ -7,7 +7,12 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="negocio.Servicio"%>
-<% ResultSet servicio = (ResultSet)session.getAttribute("consultaServicio"); %>
+<%@page import="javax.servlet.http.HttpSession"%>
+
+<% 
+    HttpSession sesion = request.getSession();
+    ResultSet servicio = (ResultSet)sesion.getAttribute("consultaServicio"); 
+%>
 <!DOCTYPE html>
 <html>
     <head>
